@@ -9,17 +9,14 @@ int main() {
     int change = 0;
     
     int digit = 1;
-    int minSum =0;
     int sum = 0;
     int answer = 0;
-    for(int i = len-1; i > 0; i --){
+    for(int i = len-1; i >= 0; i --){
         if(word[i] == '1'){
-            minSum += digit;
+            sum += digit;
         }
         digit *= 2;
     }
-    sum = minSum + digit;
-    answer = minSum;
     int temp = sum;
     digit = 1;
 
