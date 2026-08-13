@@ -1,42 +1,25 @@
-def bsearch(nums,target):
-    lo = 0
-    hi = len(nums)
-    while(lo < hi):
-        mid = int((hi - lo)/2 + lo) 
+def lower_bound(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
         if nums[mid] >= target:
             hi = mid
         else:
-            lo = mid+1
-    result = 0
-    left = lo-1
-    right = lo+1
+            lo = mid + 1
+    return lo
 
-    size = len(nums)
+def upper_bound(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > target:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
 
-    if lo < size and nums[lo] == target:
-        result +=1
-
-
-    while(left >= 0  and nums[left] == target):
-        
-        if nums[left] == target:
-            result+=1
-
-        left = left-1
-
-    
-    
-
-    
-    while(right < size  and nums[right] == target):
-        if nums[right] == target:
-            result+=1
-
-        right = right + 1
-
-        
-    
-    return result
+def count(nums, target):
+    return upper_bound(nums, target) - lower_bound(nums, target)
 
 n, m = map(int, input().split())
 
@@ -44,5 +27,5 @@ nums = list(map(int, input().split()))
 
 for i in range(m):
     target = int(input())
-    result = bsearch(nums,target)
+    result = count(nums,target)
     print(result)
