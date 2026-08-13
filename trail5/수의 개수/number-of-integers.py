@@ -11,7 +11,9 @@ def bsearch(nums,target):
     left = lo-1
     right = lo+1
 
-    if lo < len(nums) and nums[lo] == target:
+    size = len(nums)
+
+    if lo < size and nums[lo] == target:
         result +=1
 
 
@@ -22,10 +24,11 @@ def bsearch(nums,target):
 
         left = left-1
 
-        
+    
+    
 
     
-    while(right < len(nums)  and nums[right] == target):
+    while(right < size  and nums[right] == target):
         if nums[right] == target:
             result+=1
 
