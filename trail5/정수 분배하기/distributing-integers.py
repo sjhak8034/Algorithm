@@ -7,7 +7,7 @@ for i in range(n):
 
 sum_nums = sum(nums)
 max_k = sum_nums//m
-min_k = min(nums)//(m//n + m%n)
+min_k = 1
 
 def getCount(m, n, nums, slice):
     count = 0
