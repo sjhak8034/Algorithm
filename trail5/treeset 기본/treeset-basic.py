@@ -20,37 +20,18 @@ for i in range(n):
     if c == "add":
         ss.add(v)
     if c == "remove":
-        ss.remove(v)
+        ss.discard(v)  
     if c == "largest":
-        length = len(ss)
-        if length == 0:
-            print(None)
-        else:
-            print(ss[length-1])
+        print(ss[-1] if ss else None)
     if c == "smallest":
-        length = len(ss)
-        if length == 0:
-            print(None)
-        else:
-            print(ss[0])
+        print(ss[0] if ss else None)
     if c == "lower_bound":
-        flag = 0
-        for i in range(len(ss)):
-            if(ss[i] >= v):
-                flag = 1
-                print(ss[i])
-                break
-        if flag == 0:
-            print(None)
+        idx = ss.bisect_left(v)          # v 이상인 첫 위치
+        print(ss[idx] if idx < len(ss) else None)
+
     if c == "upper_bound":
-        flag = 0
-        for i in range(len(ss)):
-            if(ss[i] > v):
-                flag = 1
-                print(ss[i])
-                break
-        if flag == 0:
-            print(None)
+        idx = ss.bisect_right(v)         # v 초과인 첫 위치
+        print(ss[idx] if idx < len(ss) else None)
     if c == "find":
         if v in ss:
             print("true")
