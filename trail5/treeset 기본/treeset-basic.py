@@ -33,8 +33,5 @@ for i in range(n):
         idx = ss.bisect_right(v)         # v 초과인 첫 위치
         print(ss[idx] if idx < len(ss) else None)
     if c == "find":
-        if v in ss:
-            print("true")
-        else: 
-            print("false")
+        print("true" if v in ss else "false")
 
