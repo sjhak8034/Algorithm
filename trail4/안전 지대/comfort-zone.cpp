@@ -61,6 +61,7 @@ int main() {
                 if(visited[i][j] == 1 || c_grid[i][j] == 0){
                     continue;
                 } 
+                visited[i][j] = 1;
                 safety_nums[k] ++;
                 dfs(i,j,k);
             }
