@@ -57,7 +57,7 @@ void choose(int depth, int idx){
         return;
     }
 
-    if(idx == n*n-1){
+    if(idx == n*n){
         return;
     }
     
