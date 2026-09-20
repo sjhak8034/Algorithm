@@ -34,7 +34,7 @@ void bfs(){
         int dx[4] = {0,1,0,-1};
         int dy[4] = {1,0,-1,0};
         int x,y;
-        tie(x,y) = q.front();
+        tie(y,x) = q.front();
         q.pop();
   
         for(int i = 0; i < 4; i++){
