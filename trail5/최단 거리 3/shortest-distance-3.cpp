@@ -12,14 +12,14 @@ void dijkstra(int root,
               const vector<vector<pair<int,int>>>& edge_map,
               vector<int>& dist) {
     dist[root] = 0;
-    priority_queue<pair<int,int>> pq;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
     pq.push(make_pair(0,root));
+    
     while(!pq.empty()){
         int v,node;
         tie(v,node) = pq.top();
-        v= -v;
     
-        vector<pair<int,int>>edges = edge_map[node];
+        const auto& edges = edge_map[node]; 
         
         pq.pop();
 
@@ -34,7 +34,7 @@ void dijkstra(int root,
             if(weight + v >= dist[next_node]){
                 continue;
             }
-            pq.push(make_pair(-weight - v, next_node));
+            pq.push(make_pair(weight + v, next_node));
             dist[next_node] = weight + v;
         }
     }
