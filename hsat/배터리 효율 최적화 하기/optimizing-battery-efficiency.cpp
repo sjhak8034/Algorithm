@@ -13,7 +13,7 @@ unordered_set<unsigned long long> seen;   // 중복 배치 제거용 키
 
 int cur[5];                       // DFS 중인 배치
 vector<char> inSet;               // 이미 넣은 칸인가
-
+int anchor;
 inline bool isInbound(int y, int x) {
     return 0 <= y && y < N && 0 <= x && x < M;
 }
@@ -42,6 +42,7 @@ void collect(int cnt) {
             if (!isInbound(ny, nx)) continue;
             int nid = ny * M + nx;
             if (inSet[nid]) continue;
+            if (nid < anchor) continue;  
             inSet[nid] = 1;
             cur[cnt] = nid;
             collect(cnt + 1);
@@ -75,12 +76,11 @@ int main() {
     for (int y = 0; y < N; y++)
         for (int x = 0; x < M; x++) {
             int id = y * M + x;
-            inSet[id] = 1;
-            cur[0] = id;
+            anchor = id;              // ← 추가
+            inSet[id] = 1; cur[0] = id;
             collect(1);
             inSet[id] = 0;
-        }
-
+    }
     int P = cells.size();
 
     // 2단계: 겹침이 정확히 2인 쌍 중 점수 합이 최대인 것
