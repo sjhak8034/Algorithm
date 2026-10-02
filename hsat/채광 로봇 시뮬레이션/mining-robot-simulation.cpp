@@ -7,26 +7,7 @@ vector<vector<int>> grid;
 int dist1[1000][1000]; // 0,0 ~ i,j 까지
 int dist2[1000][1000];  // n-1,n-1 ~ i,j까지
 int dist3[1000][1000];  // i,j ~ T만큼 갔을때 최대
-
-void dfs(int o_y, int o_x,int y, int x, int depth, int current){
-    if (depth == T){
-        dist3[o_y][o_x] = max(dist3[o_y][o_x], current);
-        return;
-    }
-
-    int dx[2] = {0,1};
-    int dy[2] = {1,0};
-    
-    for(int i = 0; i < 2; i++){
-        int ny = y + dy[i];
-        int nx = x + dx[i];
-        if(ny > N-1 || nx > N-1){
-            continue;
-        }
-        dfs(o_y,o_x,ny,nx,depth+1,current+grid[ny][nx]);
-    }
-
-}
+int L[2][1000][1000];
 
 int main() {
     cin.tie(nullptr);
@@ -64,25 +45,32 @@ int main() {
             }
         }
     }
-    int current = 0;
-    for(int i =0; i < N; i++){
-        for(int j =0; j < N; j++){
-            dfs(i,j,i,j,0,grid[i][j]);
-        }
+    for (int i = 0; i < N; i++)
+    for (int j = 0; j < N; j++) L[0][i][j] = grid[i][j];
+
+    int maxT = min(T, 2 * N - 2), cur = 0;
+    for (int t = 1; t <= maxT; t++) {
+        int nx = cur ^ 1;
+        for (int i = N - 1; i >= 0; i--)
+            for (int j = N - 1; j >= 0; j--) {
+                if ((N - 1 - i) + (N - 1 - j) < t) continue;   // t번 이동이 불가능한 칸
+                int best = INT_MIN;
+                if (i + 1 < N) best = max(best, L[cur][i + 1][j]);
+                if (j + 1 < N) best = max(best, L[cur][i][j + 1]);
+                L[nx][i][j] = grid[i][j] + best;
+            }
+        cur = nx;
     }
 
-   
     int ans = -INT_MAX;
-    for(int i =0; i < N; i++){
-        for(int j =0; j < N; j++){
-            if(dist3[i][j] == -100000000 ){
-                 ans = max(ans, dist1[i][j] + dist2[i][j] - grid[i][j]);
-            } else{
-                ans = max(ans, dist1[i][j] + dist2[i][j] + dist3[i][j] - grid[i][j]);
-            }
-            
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++) {
+            bool can = ((N - 1 - i) + (N - 1 - j) >= T);       // T번 이동 가능한가
+            int v = dist1[i][j] + dist2[i][j] - grid[i][j];
+            if (can) v += L[cur][i][j];
+            ans = max(ans, v);
         }
-    }
+
 
     cout << ans;
 
